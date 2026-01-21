@@ -1,5 +1,4 @@
 <?php
-// api/clear-cart.php
 require_once '../config/config.php';
 require_once '../controllers/CartController.php';
 

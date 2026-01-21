@@ -1,9 +1,4 @@
 <?php
-/**
- * CartController
- * Handles shopping cart operations
- * Manages session-based cart functionality
- */
 
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/database.php';
@@ -20,9 +15,6 @@ class CartController {
         $this->initCart();
     }
     
-    /**
-     * Initialize cart session if not exists
-     */
     private function initCart() {
         if (!isset($_SESSION['cart']) || !isset($_SESSION['cart']['items'])) {
             $_SESSION['cart'] = [
@@ -33,11 +25,6 @@ class CartController {
         }
     }
 
-    /**
-     * Add single product to cart
-     * @param int $productId Product ID
-     * @return array Success status and message
-     */
     public function addToCart($productId) {
         if (!isLoggedIn()) {
             return ['success' => false, 'message' => 'Please login to add items to cart'];
@@ -49,7 +36,6 @@ class CartController {
             return ['success' => false, 'message' => 'Product not found'];
         }
         
-        // Check if product already in cart
         $found = false;
         foreach ($_SESSION['cart']['items'] as &$item) {
             if (isset($item['product_id']) && $item['product_id'] == $productId) {
@@ -59,7 +45,6 @@ class CartController {
             }
         }
         
-        // Add new product to cart
         if (!$found) {
             $_SESSION['cart']['items'][] = [
                 'product_id' => $product['id'],
@@ -70,17 +55,11 @@ class CartController {
             ];
         }
         
-        // Update cart totals
         $this->updateCartTotals();
         
         return ['success' => true, 'message' => 'Product added to cart', 'cart_count' => $_SESSION['cart']['count']];
     }
 
-    /**
-     * Add PC build to cart
-     * @param array $components Array of selected components
-     * @return array Success status and message
-     */
     public function addBuildToCart($components) {
         if (!isLoggedIn()) {
             return ['success' => false, 'message' => 'Please login to build PC'];
@@ -140,10 +119,6 @@ class CartController {
         return $_SESSION['cart'];
     }
     
-    /**
-     * Get cart summary for display
-     * @return array Cart summary data
-     */
     public function getCartSummary() {
         return [
             'items' => $_SESSION['cart']['items'],
@@ -152,26 +127,14 @@ class CartController {
         ];
     }
 
-    /**
-     * Get cart total
-     * @return float Total cart amount
-     */
     public function getCartTotal() {
         return $_SESSION['cart']['total'];
     }
     
-    /**
-     * Get cart item count
-     * @return int Number of items in cart
-     */
     public function getCartCount() {
         return $_SESSION['cart']['count'];
     }
     
-    /**
-     * Clear cart
-     * @return bool Success status
-     */
     public function clearCart() {
         $_SESSION['cart'] = [
             'items' => [],
@@ -207,11 +170,6 @@ class CartController {
         return ['success' => false, 'message' => 'Product not found in cart'];
     }
     
-    /**
-     * Remove item from cart
-     * @param int $itemIndex Index of item to remove
-     * @return array Success status and message
-     */
     public function removeFromCart($itemIndex) {
         if (!isLoggedIn()) {
             return ['success' => false, 'message' => 'Please login first'];
@@ -226,10 +184,6 @@ class CartController {
         return ['success' => false, 'message' => 'Item not found'];
     }
     
-    /**
-     * Validate cart before checkout
-     * @return array Validation result
-     */
     public function validateCart() {
         if (!isLoggedIn()) {
             return ['valid' => false, 'message' => 'Please login to checkout'];

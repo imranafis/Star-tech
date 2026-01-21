@@ -55,7 +55,6 @@ class Product {
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 
-    // ADD THIS METHOD FOR UPDATING PRODUCTS
     public function update($id, $name, $category, $price, $image) {
         $query = "UPDATE " . $this->table . " SET name = :name, category = :category, price = :price, image = :image WHERE id = :id";
         
@@ -70,7 +69,6 @@ class Product {
         return $stmt->execute();
     }
 
-    // ADD THIS METHOD FOR DELETING PRODUCTS
     public function delete($id) {
         $query = "DELETE FROM " . $this->table . " WHERE id = :id";
         

@@ -1,16 +1,12 @@
 <?php
-// Start output buffering to catch any unwanted output
 ob_start();
 
-// Disable error display
 ini_set('display_errors', 0);
 error_reporting(E_ALL);
 
-// Set JSON header
 header('Content-Type: application/json');
 
 try {
-    // Check if file exists before requiring
     $controllerPath = __DIR__ . '/../controllers/ProductController.php';
     if (!file_exists($controllerPath)) {
         throw new Exception('ProductController not found at: ' . $controllerPath);
@@ -85,7 +81,6 @@ try {
         throw new Exception('Failed to update product in database');
     }
     
-    // Clear any buffered output
     ob_end_clean();
     
     echo json_encode([
@@ -94,7 +89,6 @@ try {
     ]);
     
 } catch (Exception $e) {
-    // Clear any buffered output
     ob_end_clean();
     
     echo json_encode([

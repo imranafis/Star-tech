@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = isset($_POST['category']) ? sanitize($_POST['category']) : '';
     $price = isset($_POST['price']) ? floatval($_POST['price']) : 0;
     
-    // Server-side validation
     if (empty($productName) || empty($category) || $price <= 0) {
         echo json_encode(['success' => false, 'message' => 'All fields are required']);
         exit;
@@ -25,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
-    // Handle file upload
     if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
         echo json_encode(['success' => false, 'message' => 'Image upload failed']);
         exit;
@@ -44,13 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
-    // Create upload directory if not exists
     $uploadDir = UPLOAD_DIR;
     if (!file_exists($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
     
-    // Generate unique filename
     $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
     $filename = uniqid() . '_' . time() . '.' . $extension;
     $destination = $uploadDir . $filename;
@@ -61,7 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($productController->addProduct($productName, $category, $price, $filename)) {
             echo json_encode(['success' => true, 'message' => 'Product added successfully']);
         } else {
-            // Delete uploaded file if database insert fails
             unlink($destination);
             echo json_encode(['success' => false, 'message' => 'Failed to add product to database']);
         }

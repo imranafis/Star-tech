@@ -55,12 +55,11 @@ document.getElementById('addProductForm').addEventListener('submit', function(e)
     const price = document.getElementById('price').value;
     const imageFile = document.getElementById('image').files[0];
     
-    // Clear errors
+    
     document.querySelectorAll('.error').forEach(el => el.textContent = '');
     
     let isValid = true;
     
-    // Validate product name
     if (productName === '') {
         document.getElementById('nameError').textContent = 'Product name is required';
         isValid = false;
@@ -69,19 +68,16 @@ document.getElementById('addProductForm').addEventListener('submit', function(e)
         isValid = false;
     }
     
-    // Validate category
     if (category === '') {
         document.getElementById('categoryError').textContent = 'Please select a category';
         isValid = false;
     }
     
-    // Validate price
     if (price === '' || parseFloat(price) <= 0) {
         document.getElementById('priceError').textContent = 'Please enter a valid price';
         isValid = false;
     }
     
-    // Validate image
     if (!imageFile) {
         document.getElementById('imageError').textContent = 'Please select an image';
         isValid = false;
@@ -98,7 +94,6 @@ document.getElementById('addProductForm').addEventListener('submit', function(e)
     
     if (!isValid) return;
     
-    // AJAX request with FormData
     const formData = new FormData();
     formData.append('productName', productName);
     formData.append('category', category);

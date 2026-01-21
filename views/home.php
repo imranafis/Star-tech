@@ -1,5 +1,4 @@
 <div class="container">
-    <!-- Enhanced Banner Slider -->
     <div class="banner-slider">
         <div class="banner-container">
             <img src="assets/images/banners/banner1.jpg" alt="Banner 1" class="banner-slide active">
@@ -8,7 +7,6 @@
             <img src="assets/images/banners/banner4.jpg" alt="Banner 4" class="banner-slide">
             <img src="assets/images/banners/banner5.jpg" alt="Banner 5" class="banner-slide">
             
-            <!-- Banner Navigation Dots -->
             <div class="banner-dots">
                 <span class="dot active" onclick="currentSlide(0)"></span>
                 <span class="dot" onclick="currentSlide(1)"></span>
@@ -19,7 +17,6 @@
         </div>
     </div>
 
-    <!-- Enhanced Welcome Section -->
     <section class="welcome-section">
         <h2>Welcome to Star Tech</h2>
         <p>🚀 Your one-stop shop for all computer components and custom PC builds 🖥️</p>
@@ -29,7 +26,6 @@
         </div>
     </section>
 
-    <!-- Featured Categories -->
     <section class="categories-section">
         <h2>Shop by Category</h2>
         <div class="category-grid" onclick="goToCategory('Processor')">
@@ -68,18 +64,15 @@
 </div>
 
 <script>
-// Enhanced Banner Auto-Slide with Dots
 let currentSlideIndex = 0;
 const slides = document.querySelectorAll('.banner-slide');
 const dots = document.querySelectorAll('.dot');
 const totalSlides = slides.length;
 
 function showSlide(index) {
-    // Remove active class from all slides and dots
     slides.forEach(slide => slide.classList.remove('active'));
     dots.forEach(dot => dot.classList.remove('active'));
     
-    // Add active class to current slide and dot
     slides[index].classList.add('active');
     dots[index].classList.add('active');
 }
@@ -101,7 +94,6 @@ function goToCategory(category) {
 // Auto-slide every 10 seconds
 setInterval(nextSlide, 10000);
 
-// Add smooth entrance animation to category cards
 window.addEventListener('load', function() {
     const cards = document.querySelectorAll('.category-card');
     cards.forEach((card, index) => {

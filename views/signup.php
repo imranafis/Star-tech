@@ -40,12 +40,10 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
     
-    // Clear previous errors
     document.querySelectorAll('.error').forEach(el => el.textContent = '');
     
     let isValid = true;
     
-    // Username validation
     if (username === '') {
         document.getElementById('usernameError').textContent = 'Username is required';
         isValid = false;
@@ -54,7 +52,6 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         isValid = false;
     }
     
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email === '') {
         document.getElementById('emailError').textContent = 'Email is required';
@@ -64,7 +61,6 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         isValid = false;
     }
     
-    // Password validation
     if (password === '') {
         document.getElementById('passwordError').textContent = 'Password is required';
         isValid = false;
@@ -73,7 +69,6 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         isValid = false;
     }
     
-    // Confirm password validation
     if (confirmPassword === '') {
         document.getElementById('confirmPasswordError').textContent = 'Please confirm password';
         isValid = false;
@@ -84,7 +79,6 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
     
     if (!isValid) return;
     
-    // AJAX request
     const formData = new FormData();
     formData.append('username', username);
     formData.append('email', email);

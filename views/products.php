@@ -1,14 +1,11 @@
 <?php
-// views/products.php
 require_once 'controllers/ProductController.php';
 
 $productController = new ProductController();
 $categories = $productController->getCategories();
 
-// Check if a category filter is selected
 $selectedCategory = isset($_GET['category']) ? $_GET['category'] : '';
 
-// Get products based on filter
 if ($selectedCategory && $selectedCategory !== 'all') {
     $products = $productController->getProductsByCategory($selectedCategory);
 } else {
@@ -19,7 +16,6 @@ if ($selectedCategory && $selectedCategory !== 'all') {
 <div class="container">
     <h2>Our Products</h2>
     
-    <!-- Category Filter -->
     <div class="category-filter">
         <label for="categorySelect">Filter by Category:</label>
         <select id="categorySelect" onchange="filterProducts()">
@@ -33,18 +29,15 @@ if ($selectedCategory && $selectedCategory !== 'all') {
         </select>
     </div>
     
-    <!-- Products Grid -->
     <div class="products-grid">
         <?php if (count($products) > 0): ?>
             <?php foreach ($products as $product): ?>
-             <!-- In products.php - change this section: -->
             <div class="product-card">
                 <img src="assets/images/products/<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
                 <h3><?php echo htmlspecialchars($product['name']); ?></h3>
                 <div class="category"><?php echo htmlspecialchars($product['category']); ?></div>
                 <div class="price">$<?php echo number_format($product['price'], 2); ?></div>
                 
-                <!-- Replace Add to Cart with Buy Now button -->
                 <button class="btn btn-success buy-now-btn" 
                         onclick="buyNow(<?php echo $product['id']; ?>, '<?php echo addslashes($product['name']); ?>', <?php echo $product['price']; ?>)">
                     Buy Now
@@ -66,7 +59,6 @@ function filterProducts() {
     }
 }
 
-// Function to buy product directly (no cart, direct checkout)
 function buyNow(productId, productName, price) {
     console.log('Buying product:', productId, productName, price);
     
@@ -123,11 +115,9 @@ function buyNow(productId, productName, price) {
     });
 }
 
-// Optional: If you want to keep some styling
 </script>
 
 <style>
-/* Optional: Style the Buy Now button differently */
 .buy-now-btn {
     background-color: #28a745;
     border-color: #28a745;

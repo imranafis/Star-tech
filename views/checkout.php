@@ -2,7 +2,7 @@
     <h2>Checkout</h2>
     
     <div id="cart-items">
-        <!-- Cart items will be loaded here -->
+       
     </div>
     
 
@@ -40,61 +40,7 @@
 </div>
 
 <script>
-    /*
-// Load cart items on page load
-document.addEventListener('DOMContentLoaded', function() {
-    loadCartItems();
-});
 
-function loadCartItems() {
-    fetch('/api/get-cart.php')
-    .then(response => response.json())
-    .then(data => {
-        if (data.success && data.cart && data.cart.items.length > 0) {
-            displayCartItems(data.cart);
-        } else {
-            document.getElementById('cart-items').innerHTML = 
-                '<div class="alert alert-warning">Your cart is empty. Please add items to checkout.</div>';
-            document.getElementById('cart-total').textContent = '0.00';
-            disableCheckout();
-        }
-    })
-    .catch(error => {
-        console.error('Error loading cart:', error);
-        document.getElementById('cart-items').innerHTML = 
-            '<div class="alert alert-danger">Error loading cart items.</div>';
-    });
-}
-
-function displayCartItems(cart) {
-    let html = '<div class="cart-items-list">';
-    
-    cart.items.forEach((item, index) => {
-        if (item.type === 'build_pc') {
-            html += `<div class="cart-item build-item">
-                <h4>${item.name}</h4>
-                <ul>`;
-            
-            Object.values(item.components).forEach(comp => {
-                html += `<li>${comp.name} - $${comp.price.toFixed(2)}</li>`;
-            });
-            
-            html += `</ul>
-                <div class="item-total">$${item.price.toFixed(2)}</div>
-            </div>`;
-        } else {
-            html += `<div class="cart-item">
-                <h4>${item.name}</h4>
-                <div>Quantity: ${item.quantity}</div>
-                <div class="item-total">$${(item.price * item.quantity).toFixed(2)}</div>
-            </div>`;
-        }
-    });
-    html += '</div>';
-    document.getElementById('cart-items').innerHTML = html;
-    document.getElementById('cart-total').textContent = cart.total.toFixed(2);
-}
-*/
 
 function disableCheckout() {
     document.querySelector('.btn-block').disabled = true;

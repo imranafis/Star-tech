@@ -93,7 +93,6 @@ function loadComponentsByCategory() {
                     componentProducts[product.category].push(product);
                 });
                 
-                // Populate dropdowns
                 document.querySelectorAll('.component-select').forEach(select => {
                     const category = select.dataset.category;
                     if (componentProducts[category]) {

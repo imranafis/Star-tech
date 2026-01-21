@@ -8,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = isset($_POST['email']) ? sanitize($_POST['email']) : '';
     $password = isset($_POST['password']) ? trim($_POST['password']) : '';
     
-    // Server-side validation
     if (empty($username) || empty($email) || empty($password)) {
         echo json_encode(['success' => false, 'message' => 'All fields are required']);
         exit;

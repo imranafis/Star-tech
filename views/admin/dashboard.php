@@ -57,7 +57,6 @@ $products = $productController->getAllProducts();
     </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="modal">
     <div class="modal-content">
         <h3>Confirm Delete</h3>
@@ -116,21 +115,17 @@ document.getElementById('cancelDelete').addEventListener('click', function() {
 });
 
 function showMessage(message, type) {
-    // Create message element
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${type}`;
     messageDiv.textContent = message;
     
-    // Add to page
     document.querySelector('.container').prepend(messageDiv);
     
-    // Remove after 3 seconds
     setTimeout(() => {
         messageDiv.remove();
     }, 3000);
 }
 
-// Close modal when clicking outside
 window.onclick = function(event) {
     const modal = document.getElementById('deleteModal');
     if (event.target == modal) {

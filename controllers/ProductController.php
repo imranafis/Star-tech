@@ -33,12 +33,10 @@ class ProductController {
         return $this->product->create($name, $category, $price, $image);
     }
 
-    // ADD THIS METHOD FOR UPDATING PRODUCTS
     public function updateProduct($id, $name, $category, $price, $image) {
         return $this->product->update($id, $name, $category, $price, $image);
     }
 
-    // ADD THIS METHOD FOR DELETING PRODUCTS
     public function deleteProduct($id) {
         return $this->product->delete($id);
     }

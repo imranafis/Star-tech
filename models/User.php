@@ -1,15 +1,9 @@
 <?php
-/**
- * User Model
- * Handles all user-related database operations
- * Including authentication, registration, and profile management
- */
 
 class User {
     private $conn;
     private $table = "users";
 
-    // User properties
     public $id;
     public $username;
     public $email;
@@ -21,13 +15,6 @@ class User {
         $this->conn = $db;
     }
 
-    /**
-     * Register new user
-     * @param string $username Username
-     * @param string $email Email address
-     * @param string $password Plain text password (will be hashed)
-     * @return bool Registration success status
-     */
     public function register($username, $email, $password) {
         $query = "INSERT INTO " . $this->table . " 
                   (username, email, password) 
@@ -51,12 +38,7 @@ class User {
         }
     }
 
-    /**
-     * User login
-     * @param string $username Username
-     * @param string $password Plain text password
-     * @return array|false User data if successful, false otherwise
-     */
+
     public function login($username, $password) {
         $query = "SELECT id, username, email, password, is_admin, created_at 
                   FROM " . $this->table . " 
@@ -70,9 +52,7 @@ class User {
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch();
             
-            // Verify password using password_verify
             if (password_verify($password, $row['password'])) {
-                // Don't return password in the result
                 unset($row['password']);
                 return $row;
             }
@@ -81,11 +61,6 @@ class User {
         return false;
     }
 
-    /**
-     * Check if username exists
-     * @param string $username Username to check
-     * @return bool True if exists, false otherwise
-     */
     public function usernameExists($username) {
         $query = "SELECT id FROM " . $this->table . " WHERE username = :username LIMIT 1";
         $stmt = $this->conn->prepare($query);
@@ -95,12 +70,7 @@ class User {
         return $stmt->rowCount() > 0;
     }
 
-    /**
-     * Check if email exists
-     * @param string $email Email to check
-     * @return bool True if exists, false otherwise
-     */
-    public function emailExists($email) {
+   public function emailExists($email) {
         $query = "SELECT id FROM " . $this->table . " WHERE email = :email LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":email", $email);
@@ -109,11 +79,6 @@ class User {
         return $stmt->rowCount() > 0;
     }
 
-    /**
-     * Get user by ID
-     * @param int $id User ID
-     * @return array|false User data or false if not found
-     */
     public function getById($id) {
         $query = "SELECT id, username, email, password, is_admin, created_at 
                   FROM " . $this->table . " 
@@ -131,11 +96,7 @@ class User {
         return false;
     }
 
-    /**
-     * Get user by username
-     * @param string $username Username
-     * @return array|false User data or false if not found
-     */
+   
     public function getByUsername($username) {
         $query = "SELECT id, username, email, is_admin, created_at 
                   FROM " . $this->table . " 
@@ -153,11 +114,6 @@ class User {
         return false;
     }
 
-    /**
-     * Get user by email
-     * @param string $email Email address
-     * @return array|false User data or false if not found
-     */
     public function getByEmail($email) {
         $query = "SELECT id, username, email, is_admin, created_at 
                   FROM " . $this->table . " 
@@ -175,12 +131,7 @@ class User {
         return false;
     }
 
-    /**
-     * Update user password
-     * @param int $userId User ID
-     * @param string $newPassword New password (will be hashed)
-     * @return bool Update success status
-     */
+
     public function updatePassword($userId, $newPassword) {
         $query = "UPDATE " . $this->table . " 
                   SET password = :password 
@@ -201,12 +152,7 @@ class User {
         }
     }
 
-    /**
-     * Update user email
-     * @param int $userId User ID
-     * @param string $email New email address
-     * @return bool Update success status
-     */
+
     public function updateEmail($userId, $email) {
         $query = "UPDATE " . $this->table . " 
                   SET email = :email 
@@ -225,13 +171,7 @@ class User {
         }
     }
 
-    /**
-     * Update user profile
-     * @param int $userId User ID
-     * @param string $username New username
-     * @param string $email New email
-     * @return bool Update success status
-     */
+
     public function updateProfile($userId, $username, $email) {
         $query = "UPDATE " . $this->table . " 
                   SET username = :username, email = :email 
@@ -251,11 +191,7 @@ class User {
         }
     }
 
-    /**
-     * Delete user
-     * @param int $userId User ID
-     * @return bool Delete success status
-     */
+    
     public function delete($userId) {
         $query = "DELETE FROM " . $this->table . " WHERE id = :id";
         
@@ -270,10 +206,7 @@ class User {
         }
     }
 
-    /**
-     * Get all users (admin function)
-     * @return array Array of all users
-     */
+    
     public function getAllUsers() {
         $query = "SELECT id, username, email, is_admin, created_at 
                   FROM " . $this->table . " 
@@ -285,10 +218,7 @@ class User {
         return $stmt->fetchAll();
     }
 
-    /**
-     * Count total users
-     * @return int Total user count
-     */
+   
     public function countUsers() {
         $query = "SELECT COUNT(*) as total FROM " . $this->table;
         $stmt = $this->conn->prepare($query);
@@ -298,11 +228,7 @@ class User {
         return $result['total'];
     }
 
-    /**
-     * Make user admin
-     * @param int $userId User ID
-     * @return bool Update success status
-     */
+
     public function makeAdmin($userId) {
         $query = "UPDATE " . $this->table . " SET is_admin = 1 WHERE id = :id";
         
@@ -317,11 +243,7 @@ class User {
         }
     }
 
-    /**
-     * Remove admin rights
-     * @param int $userId User ID
-     * @return bool Update success status
-     */
+  
     public function removeAdmin($userId) {
         $query = "UPDATE " . $this->table . " SET is_admin = 0 WHERE id = :id";
         

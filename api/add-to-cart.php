@@ -1,12 +1,10 @@
 <?php
-// api/add-to-cart.php
 require_once '../config/config.php';
 require_once '../controllers/CartController.php';
 
 header('Content-Type: application/json');
 session_start();
 
-// Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Please login first']);
     exit;
@@ -15,7 +13,6 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cartController = new CartController();
     
-    // Check if it's a PC build
     if (isset($_POST['build_components'])) {
         $components = json_decode($_POST['build_components'], true);
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -24,7 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $result = $cartController->addBuildToCart($components);
     } 
-    // Check if it's a single product
     elseif (isset($_POST['product_id'])) {
         $productId = intval($_POST['product_id']);
         $result = $cartController->addToCart($productId);
